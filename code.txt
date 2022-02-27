@@ -1,0 +1,70 @@
+create table Patient
+(
+patient_id number primary key,
+p_name varchar2(10) not null,
+date_of_birth Date ,
+age varchar2(5) ,
+gender varchar2(1) ,
+p_phone_number varchar2(20),
+p_email varchar2(50),
+pattient_status varchar2(20),
+patient_address varchar2(50)
+);
+
+create table Test_Center
+(
+testcenter_id number primary key,
+t_phonenumber varchar2(20) ,
+t_email varchar2(50),
+t_name varchar2(20) not null,
+t_address varchar2(50)
+);
+
+create table appointment
+(
+appointment_id number primary key,
+patient_id number,
+testcenter_id number,
+apnmt_date Date , 
+dose_number number ,
+apnmt_time varchar2(20) ,
+constraint fk2_apnmt foreign key(patient_id)
+references Patient(patient_id),
+constraint fk1_apnmt foreign key(testcenter_id)
+references Test_Center(testcenter_id)
+);
+
+create table Vaccine
+(
+vaccine_id number primary key,
+vaccine_name varchar2(20) not null,
+testcenter_id number,
+batch_number number ,
+constraint fk1_vac foreign key(testcenter_id)
+references Test_Center (testcenter_id)
+);
+
+
+
+create table vaccine_supply
+(
+vaccinesupply_id number primary key,
+vaccine_id number,
+vaccine_order varchar2(20),
+dose_availability varchar2(10),
+constraint fk1_vac_sup foreign  key(vaccine_id)
+references Vaccine(vaccine_id)
+
+);
+
+create table supplier
+(
+supplier_id number primary key,
+supplier_name varchar2(20) not null,
+vaccine_price varchar2(20),
+vaccinesupply_id number,
+vaccine_availability varchar2(20),
+constraint fk1_sup foreign key(vaccinesupply_id)
+references vaccine_supply (vaccinesupply_id)
+
+); 
